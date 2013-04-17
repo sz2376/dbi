@@ -3,7 +3,7 @@
 #include<string.h>
 
 void output(int p){
-  int m, n;
+	int m, n;
 	int array1 [13] = {0};
 	for (m = 1; ; m ++) {
 		array1 [m] = p % 2;
@@ -197,44 +197,47 @@ float code(float *arr,int *arr2){
 	  for (m = 0; m < l + 2; m++) {
                   if ((lll[m] == 0) && (m % 4 == 0)) {a=lll[m - 3]; break;}
           }
-	  if (A[a].b!= 0) {//means no no-branching for the last &-term
+	  if (A[a].b == 0) {//means no no-branching for the last &-term
+//		  printf("%d,%d,%d,%d", A[k-1].L, A[k-1].R,A[3].L,A[3].R);
 		  for (m = 0; m < l + 2; m ++){
 			  if (lll[m] == 0 && m % 4 == 0) {m ++; continue;}
 			  if (lll[m] == 0 && m % 4 != 0) {printf("("); output(rr[m / 2]); m ++; break;}
 		  }
-		  for (m = m + 1; m < l + 2; ){
-                          if (lll[m] == 0 && m % 4 == 0) {m += 2; continue;}
-			  if (lll[m] == 0 && m % 4 != 0) {printf(" && ("); output(rr[m / 2]); m += 2; break;}
+		  for (m = m + 1; m < l + 2; m ++){
+                          if (lll[m] == 0 && m % 4 == 0) {m ++; continue;}
+			  if (lll[m] == 0 && m % 4 != 0) {printf(" && ("); output(rr[m / 2]); m ++; break;}
 		  }
 		  for (m = m + 1; m < l + 2; m ++){
 			  if (lll[m] == 0 && m % 4 == 0) {m ++; continue;}
 			  if (lll[m] == 0 && m % 4 != 0) {printf(" && "); output(rr[m / 2]); m ++;}
 		  }
-		  for (n = m; n > 0; n --) {
+		  for (n = l; n > 0; n --) {
 			  if (lll[n] == 0 && n % 4 != 0) {n --; continue;}
-		          if (lll[n] == 0 && n % 4 == 0) {printf(" && "); output(rr[n / 2]); printf(")"); n --;}
+		          if (lll[n] == 0 && n % 4 == 0) {printf(" && "); output(rr[n / 2]); printf(")"); n --; continue;}
+			  if (lll[n] != 0) {n --;}
 		  }
 		  printf(" {\n  answer[j++] = i;\n}");
 	  } else {//means no-branching for the last &-term
-//                  printf("%d,%d,", A[k-1].L, A[k-1].R);
+//                printf("%d,%d,", A[k-1].L, A[k-1].R);
 //		  for (m = 0; m < l + 2; m ++) {printf("%d ",lll[m]);} puts("\n");
 //                for (m = 0; m < l + 2; m ++) {printf("%d ", rr [m]);}
 		  for (m = 0; m < l + 2; m ++){
 			  if (lll[m] == 0 && m % 4 == 0) {m ++; continue;}
 			  if (lll[m] == 0 && m % 4 != 0) {printf("("); output(rr[m / 2]); m ++; max --; break;}
 		  }
-		  for (m = m + 1; m < l + 2; m ++){
+		  for ( ; m < l + 2; m ++){
 			  if (max == 1) break;
-			  else {if (lll[m] == 0 && m % 4 == 0) {m ++; continue;}
-			        if (lll[m] == 0 && m % 4 != 0) {printf(" && ("); output(rr[m / 2]); m ++; max --; break;}}
+			  m ++;
+			  if (lll[m] == 0 && m % 4 == 0) {m ++; continue;}
+			  if (lll[m] == 0 && m % 4 != 0) {printf(" && ("); output(rr[m / 2]); m ++; max --; break;}
 		  }
 		  for (m = m + 1; m < l + 2; m ++){
 			  if (lll[m] == 0 && m % 4 == 0) {m ++; continue;}
                           if (lll[m] == 0 && m % 4 != 0) {printf(" && "); output(rr[m / 2]); m ++;}
                   }
 		  for (n = l; n > 0; n --) {
-                          if (lll[n] == 0 && n % 4 == 0) {if (max == 0) break ; printf(" &&"); output(rr[n / 2]); printf(")"); max --;}
-			  if (lll[n] == 0 && n % 4 != 0) if (max == 0) break;
+                          if (lll[n] == 0 && n % 4 == 0) {if (max == 1) break ; printf(" &&"); output(rr[n / 2]); printf(")"); max --;}
+			  if (lll[n] == 0 && n % 4 != 0) if (max == 2) break;
 		          n --;
                   }
 		  printf("{\n  answer[j] == i;\n  j += ");
